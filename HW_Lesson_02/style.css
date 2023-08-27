@@ -1,0 +1,13 @@
+table{
+    border-collapse: collapse;
+    border: 0px solid rgb(169, 124, 213);
+}
+td{
+    border: 1px solid black;
+    padding: 8px;
+    width: 100px;            
+}
+.item--active{
+    color: green;
+    font-weight: bold;
+}
