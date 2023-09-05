@@ -1,4 +1,14 @@
-const ITEM_COMPLETED = `completed`
-const ITEM_PROGRESS = `progress`
+const ITEM_COMPLETED = `completed`;
+const ITEM_PROGRESS = `progress`;
 
-export {ITEM_COMPLETED, ITEM_PROGRESS};
+const FILTER_TODO_LIST_ALL = `all`;
+const FILTER_TODO_LIST_COMPLETED = `completed`;
+const FILTER_TODO_LIST_PROGRESS = `progress`;
+
+export {
+    ITEM_COMPLETED,
+    ITEM_PROGRESS,
+    FILTER_TODO_LIST_ALL,
+    FILTER_TODO_LIST_COMPLETED,
+    FILTER_TODO_LIST_PROGRESS
+};

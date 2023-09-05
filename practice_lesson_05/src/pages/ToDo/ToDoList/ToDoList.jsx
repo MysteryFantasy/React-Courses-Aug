@@ -7,33 +7,55 @@ import {
     deletedToDoItemInApi
 } from '../../../services/toDoService';
 
-export default function ToDoList({newToDoListTaskItem}) {
-    const [list, setList] = useState([]);
+import {
+    FILTER_TODO_LIST_COMPLETED,
+    FILTER_TODO_LIST_PROGRESS
+} from '../../../constants/toDoConstants';
+
+export default function ToDoList({newToDoListTaskItem, filterTitle}) {
     
+    const [list, setList] = useState([]);
+    const [filteredList, setFilteredList] = useState([]);
+
     useEffect(() =>{
         (async () => {
             try{
                 setList(await getToDoListFromApi());
-
             } catch(err){
                 console.log(err, `error`);
             }
         })()
 
     }, []);
+    
+    useEffect(() => {
+        setFilteredList(list);
+    }, [list]);
 
-    useEffect(() => {  
+    useEffect(() => {
         Object.keys(newToDoListTaskItem).length && setList(prevState => [...prevState, newToDoListTaskItem]);
     }, [newToDoListTaskItem]); 
+    
+    useEffect(() => {
+        switch(filterTitle){
+            case FILTER_TODO_LIST_COMPLETED:
+                setFilteredList(list.filter(item => item.completed));
+                break;
+            case FILTER_TODO_LIST_PROGRESS:
+                setFilteredList(list.filter(item => !item.completed));
+                break;
+            default:
+                setFilteredList(list);
+        }
+    }, [filterTitle, list]); 
 
     const completedItemBtn = (item) => { 
         (async () => {
-                let changedItem = await changeToDoItemInApi(item.id, {completed: !item.completed});
-                
-                setList(prevState => prevState.map(element => {
-                    if(element.id === item.id) element = changedItem;
-                    return element;
-                }))
+            let changedItem = await changeToDoItemInApi(item.id, {completed: !item.completed});
+            setList(prevState => prevState.map(element => {
+                if(element.id === item.id) element = changedItem;
+                return element;
+            }))
         })()
     };
 
@@ -51,7 +73,7 @@ export default function ToDoList({newToDoListTaskItem}) {
 
     return list.length 
     ? <ul>
-        {list.map((item, index) => (
+        {filteredList.map((item, index) => (
             <ToDoListItem key={index} item={item} completedItemBtn={completedItemBtn} deleteItemBtn={deleteItemBtn}/>
         ))}
     </ul> 

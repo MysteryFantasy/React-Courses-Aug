@@ -1,11 +1,10 @@
 import React, {useState, useRef} from 'react';
 import './style.sass';
-
 import {addToDoItemToApi} from '../../../services/toDoService'
 
 export default function ToDoForm({liftingNewToDoListItem}) {
     const [newToDoListItem, setNewToDoListItem] = useState({
-        title: ``,
+        title: '',
         completed: true,
     });
 
@@ -13,7 +12,6 @@ export default function ToDoForm({liftingNewToDoListItem}) {
     const completedTaskItemBtn = e => setNewToDoListItem(prevState => ({...prevState, completed: e.target.checked}));
 
     const inputTitleText = useRef();
-    const formNode = useRef();
 
     const submitBtn = e => {
         e.preventDefault();
@@ -24,15 +22,13 @@ export default function ToDoForm({liftingNewToDoListItem}) {
         (async () => {
             let addedNewToDoListItem = await addToDoItemToApi(newToDoListItem);
             liftingNewToDoListItem(addedNewToDoListItem);
-            formNode.current.reset();
-
         })()
-    };
+    }
 
     return (
-        <form onSubmit={submitBtn} ref={formNode}>
-            <label htmlFor="toDoTitle">
-                To do task title:{" "}
+        <form onSubmit={submitBtn}>
+            <label>
+                To do task title:
                 <input
                     type="text"
                     id="toDoTitle"
@@ -42,8 +38,8 @@ export default function ToDoForm({liftingNewToDoListItem}) {
                 />
             </label>
     
-            <label htmlFor="toDoItemCompleted">
-                To do task completed:{" "}
+            <label>
+                To do task completed:
                 <input
                     type="checkbox"
                     id="toDoCompleted"

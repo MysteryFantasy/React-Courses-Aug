@@ -14,7 +14,7 @@ const changeToDoItemInApi = (id, item) => fetch(API+`/${id}`,
     body: JSON.stringify(item),
 }).then((data) => data.json());
 
-// -- функція для видалення обєкта з масиву в БД
+// -- функція для видалення об'єкта з масиву в БД
 const deletedToDoItemInApi = (id) => fetch(API+`/${id}`,
 {
     method: `DELETE`
@@ -29,6 +29,7 @@ const addToDoItemToApi = (item) => fetch(API,
     },
     body: JSON.stringify(item),
 }).then((data) => data.json());
+
 
 export {
     getToDoListFromApi,
